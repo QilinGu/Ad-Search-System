@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AdSearch Endpoints</title>
+
+
+
+    <!--  Load the Google APIs Javascript client library -->
+    <!--  Then call the init function, which is defined in hello.js -->
+
+    <script src="js/angular.min.js"></script>
+    <script src="js/hello.js"></script>
+    <script src="js/AdsSearchApp.js"></script>
+    <script src="js/AdsSearchService.js"></script>
+    <script src="js/AdsSearchController.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=init"></script>
+    <!--<script src="js/index.js"></script>-->
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+
+
+</head>
+
+<body ng-app="AdsSearchApp" ng-controller="AdsSearchController">
+
+<div id="container">
+    <div class="align">
+        <h1>
+            <span class="blue">A</span>
+            <span class="red">d</span>
+            <span class="yellow">s</span>
+            <span class="blue">S</span>
+            <span class="green">e</span>
+            <span class="red">a</span>
+            <span class="blue">r</span>
+            <span class="red">c</span>
+            <span class="yellow">h</span>
+        </h1>
+    </div>
+    <div class="align">
+        <input type="text" id="query_field" class="form-control"
+               placeholder="Search for advertisement" ng-model="searchText"
+               style="width: 80%; display: inline"/>
+    </div>
+    <div class="align">
+        <button class="search" id="query_button" ng-click="getTokens()" type="button"
+                >Ads Search</button>
+        <button><a href="https://en.wikipedia.org/wiki/Special:Random">I'm Feeling Lucky</a></button>
+    </div>
+    <!--<div class="row">-->
+        <!--<div class="col-md-12">-->
+
+            <!--<input type="text" id="query_field" class="form-control"-->
+                   <!--placeholder="Search for advertisement" ng-model="searchText"-->
+                   <!--style="width: 80%; display: inline"/>-->
+
+
+            <!--<button id="query_button" ng-click="getTokens()" type="button"-->
+                    <!--class="btn btn-default"> Search </button>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+
+<div>
+    <div id="showSearchSteps" ng-show="showResult">
+
+        <div class="row">
+            <div class="row" style="text-align: center; vertical-align: middle;">
+                <H1>NLP</H1>
+            </div>
+            <div class="row">
+                <div class="col col-xs-11 col-xs-offset-1">
+                    <ul>
+                        <div ng-repeat="token in tokens">
+                            <li>{{token}}</li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="row" style="text-align: center; vertical-align: middle;">
+                <H1>Index Match</H1>
+            </div>
+
+            <div class="row">
+
+                <div ng-repeat="adsStatsInfo in adsStatsInfoList">
+                    <div class="row">
+                        <div class="col col-xs-2 col-xs-offset-1">
+                            <label>campaignId</label> {{adsStatsInfo.campaignId}}
+                        </div>
+                        <div class="col col-xs-2">
+                            <label>adsId</label> {{adsStatsInfo.adsId}}
+                        </div>
+                        <div class="col col-xs-2">
+                            <label>quality score</label> {{adsStatsInfo.qualityScore}}
+                        </div>
+                        <div class="col col-xs-2">
+                            <label>relevance score</label> {{adsStatsInfo.relevanceScore}}
+                        </div>
+                        <div class="col col-xs-2">
+                            <label>rank score</label> {{adsStatsInfo.rankScore}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="row" style="text-align: center; vertical-align: middle;">
+                <H1>Optimization</H1>
+            </div>
+
+            <div class="row">
+
+                <div ng-repeat="adsStatsInfo in OptimizeadsStatsInfoList">
+                    <div class="row">
+                        <div class="col col-xs-2 col-xs-offset-1">
+                            <label>campaignId</label> {{adsStatsInfo.campaignId}}
+                        </div>
+                        <div class="col col-xs-2">
+                            <label>adsId</label> {{adsStatsInfo.adsId}}
+                        </div>
+                        <div class="col col-xs-2">
+                            <label>quality score</label> {{adsStatsInfo.qualityScore}}
+                        </div>
+                        <div class="col col-xs-2">
+                            <label>relevance score</label> {{adsStatsInfo.relevanceScore}}
+                        </div>
+                        <div class="col col-xs-2">
+                            <label>rank score</label> {{adsStatsInfo.rankScore}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+
+<script>
+    function createLayout(term){
+        $("#container").empty();
+        var searchBar = $("<div>").addClass("searchBar");
+        var header = $("<h3>").html("AdsSearch");
+        var searchBarInput = $("<input>").val(term).addClass("float");
+        var searchBarButton = $("<button>").html("Search").addClass('float search');
+        $(searchBar).append(header.addClass("moveHeader"));
+        $(searchBar).append(searchBarInput);
+        $(searchBar).append(searchBarButton);
+
+        var layout = $("<div>").addClass("layout");
+
+        $("#container").append(searchBar);
+        $("#container").append(layout);
+
+    }
+
+    // function to create the new layout
+    function displayResults(results) {
+        Object.keys(results).forEach(function(key) {
+            var title = $("<a>").attr("href", "https://en.wikipedia.org/wiki/" + results[key].title.replace(/[\s]/g, '_')).text(results[key].title);
+            var link = $("<p>").html("https://en.wikipedia.org/wiki/" + results[key].title.replace(/[\s]/g, '_')).addClass('linkText');
+            var extract = $("<p>").html(results[key].extract);
+            var box = $("<div>");
+            $(box).append(title);
+            $(box).append(link);
+            $(box).append(extract);
+            $(".layout").append(box.addClass("box"));
+        });
+    }
+
+
+    $(".search").click(function() {
+        var term = $("input").val();
+
+        createLayout(term);
+
+        var ajaxUrl = "https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrsearch=" + term + "&prop=extracts&exintro&explaintext&exsentences=1&exlimit=max";
+
+        $.ajax({
+            url: ajaxUrl,
+            dataType: 'jsonp',
+            type: 'POST',
+            headers: { 'Api-User-Agent': 'Example/1.0' }
+        }).done(function(data){
+            displayResults(data.query.pages);
+        });
+    });
+</script>
+
+</body>
+
+</html>
+
+
+
+
+
