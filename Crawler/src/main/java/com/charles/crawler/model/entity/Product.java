@@ -9,6 +9,15 @@ public class Product {
     String url = null;
     Double price = null;
     String absoluteUrl = null;
+    String description = null;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getId() {
         return id;
