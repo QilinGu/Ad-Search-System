@@ -1,4 +1,4 @@
-# Ad Searching System 0602 
+# Reinvented Ad Searching System 0602 
 
 
 # Description
@@ -20,7 +20,7 @@ Basic process flow: Query understanding -> Select Ads Candidates -> Rank Ads ->F
 # Time Schedule
 | Stage | Start  | End | Goals |
 | ------------- | ------------- | ------------- | ------------- |
-| 0 Week   | 08/29/16  | 09/04/16 | Build up team and create github repository
+| 0 Week   | 12/29/16  | 01/04/17 | Finish the amazon crawler and user query/click log and stored crawlled data into mysql
 | 1st Week | 09/05/16  | 09/11/16 | Set up environment and start front-end|
 | 2nd Week | 09/12/16  | 09/18/16 | Finish front-end and start back-end |
 | 3rd Week | 09/19/16  | 09/25/16 | Back-end and connection to twitter API  |
