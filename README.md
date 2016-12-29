@@ -1,4 +1,4 @@
-# Reinvented Ad Searching System 0602 
+# Reinvent Ad Searching System 0602 
 
 
 # Description
@@ -30,7 +30,7 @@ Basic process flow: Query understanding -> Select Ads Candidates -> Rank Ads ->F
 
 # Used Technology
 - Front-end: AngularJS Bootstrap
-- Backend: Spring MVC Jetty Lucene Memcached MongoDB
+- Backend: Spring MVC Jetty Lucene Memcached Mysql
 - NLP algorithm
 
 # Resource 
@@ -39,6 +39,11 @@ Basic process flow: Query understanding -> Select Ads Candidates -> Rank Ads ->F
 - Memcached Tutorial[link](http://www.tutorialspoint.com/memcached/)
 - Spring in action[link](http://pdf.th7.cn/down/files/1508/Spring%20in%20Action,%204th%20Edition.pdf)
 - Bittiger project tutorial[link](https://www.bittiger.io/classpage/w8pphM4Sahx54kAm3)
-
+- Common logging[link](https://commons.apache.org/proper/commons-logging/)
+- slf4j[link](http://www.slf4j.org/manual.html)
+- jsoup[link](https://jsoup.org/)
+- HttpComponents[link](https://hc.apache.org/)
+- junit[link](http://junit.org/junit4/)
+- commons-lang3[link](https://commons.apache.org/proper/commons-lang/)
 #License
 See the [LICENSE](https://opensource.org/licenses/MIT) file for license rights and limitations (MIT).
