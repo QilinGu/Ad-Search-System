@@ -44,6 +44,8 @@ Basic process flow: Query understanding -> Select Ads Candidates -> Rank Ads ->F
 - jsoup[link](https://jsoup.org/)
 - HttpComponents[link](https://hc.apache.org/)
 - junit[link](http://junit.org/junit4/)
-- commons-lang3[link](https://commons.apache.org/proper/commons-lang/)
-#License
+- commons-langlang3[link](https://commons.apache.org/proper/commons-lang/)
+
+
+# License
 See the [LICENSE](https://opensource.org/licenses/MIT) file for license rights and limitations (MIT).
