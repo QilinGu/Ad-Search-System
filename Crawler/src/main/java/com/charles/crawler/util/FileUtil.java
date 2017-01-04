@@ -21,7 +21,6 @@ public class FileUtil {
     public static void createTSV(List<Product> listToPrint){
         BufferedWriter bw = null;
 
-
         File tsv = new File("Product.tsv");
         try {
             log.info("->-> Starting method Utils.createTsv()");

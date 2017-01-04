@@ -5,5 +5,4 @@ package com.charles.crawler.model.service.interfaces;
  */
 public interface PageAnalizerService {
 
-
 }

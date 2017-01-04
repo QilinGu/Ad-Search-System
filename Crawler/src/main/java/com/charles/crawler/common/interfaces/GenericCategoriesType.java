@@ -5,4 +5,5 @@ package com.charles.crawler.common.interfaces;
  */
 public interface GenericCategoriesType {
 
+    String getCategoryByDefinedTokens(String fullCategoryURL, GenericCategoriesType categoryType);
 }
