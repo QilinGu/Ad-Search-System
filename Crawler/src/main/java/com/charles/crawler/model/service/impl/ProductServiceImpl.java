@@ -4,6 +4,7 @@ import com.charles.crawler.model.dao.interfaces.ProductDAO;
 import com.charles.crawler.model.entity.PageLinkProductElement;
 import com.charles.crawler.model.entity.Product;
 import com.charles.crawler.model.service.interfaces.ProductService;
+import com.charles.crawler.util.FileUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void printProductToCsvFileByDefault() {
-
+        FileUtil.createTSV(getNotInsertedProducts());
     }
 
     public ProductDAO getProductDAO() {
@@ -65,4 +66,7 @@ public class ProductServiceImpl implements ProductService {
     public void setProducts(LinkedList<Product> products) {
         this.products = products;
     }
+
+
+
 }

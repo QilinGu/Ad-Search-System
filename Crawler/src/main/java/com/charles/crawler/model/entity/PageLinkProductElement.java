@@ -9,6 +9,15 @@ public class PageLinkProductElement extends BasicPageLinkElement{
     String title = null;
     String description = null;
     Double price = null;
+    String url = null;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     @Override
     public String toString() {
