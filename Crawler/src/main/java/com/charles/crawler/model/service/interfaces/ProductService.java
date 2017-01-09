@@ -1,9 +1,9 @@
 package com.charles.crawler.model.service.interfaces;
 
-import com.charles.crawler.model.entity.PageLinkProductElement;
-import com.charles.crawler.model.entity.Product;
+        import com.charles.crawler.model.entity.PageLinkProductElement;
+        import com.charles.crawler.model.entity.Product;
 
-import java.util.List;
+        import java.util.List;
 
 /**
  * Created by ChenCheng on 1/3/2017.
