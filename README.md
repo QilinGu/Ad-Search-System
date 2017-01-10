@@ -20,8 +20,8 @@ Basic process flow: Query understanding -> Select Ads Candidates -> Rank Ads ->F
 # Time Schedule
 | Stage | Start  | End | Goals |
 | ------------- | ------------- | ------------- | ------------- |
-| 0 Week   | 12/29/16  | 01/04/17 | Finish the amazon crawler and user query/click log and stored crawlled data into mysql
-| 1st Week | 09/05/16  | 09/11/16 | Set up environment and start front-end|
+| 0 Week   | 12/29/16  | 01/11/17 | Finish the amazon crawler and user query/click log and stored crawlled data into mysql |
+| 1st Week | 01/11/17  | 01/16/17 | Finish basic ads search server v1.0, including ads business logic, user query preprocessing, ads keywords inverted index, similarity algorithm| 
 | 2nd Week | 09/12/16  | 09/18/16 | Finish front-end and start back-end |
 | 3rd Week | 09/19/16  | 09/25/16 | Back-end and connection to twitter API  |
 | 4th Week | 09/26/16  | 10/02/16 | Go over whole process and fix bugs |

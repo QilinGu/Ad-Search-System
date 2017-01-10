@@ -79,7 +79,6 @@ public class PageAnalizerThread implements Runnable{
         setInitialURL(initialURL);
     }
 
-    
 
     public void run() {
         log.info("->-> Starting method PageRetrieverThread.run()");
