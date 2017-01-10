@@ -14,7 +14,7 @@ import java.util.List;
  * Created by ChenCheng on 1/8/2017.
  */
 public class AmazonCrawler {
-    private static final String CONFIG_PATH = "applicationContext.xml";
+    private static final String CONFIG_PATH = "spring-config.xml";
 
     private Integer numOfRetrieves = null;
 
