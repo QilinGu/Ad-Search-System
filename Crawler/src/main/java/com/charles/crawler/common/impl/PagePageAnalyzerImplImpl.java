@@ -6,7 +6,7 @@ import com.charles.crawler.common.interfaces.GenericProductsType;
 import com.charles.crawler.util.ParseUtils;
 import org.apache.commons.lang3.EnumUtils;
 import org.jsoup.nodes.Document;
-import sun.net.www.ParseUtil;
+
 
 import java.io.IOException;
 import java.util.Set;

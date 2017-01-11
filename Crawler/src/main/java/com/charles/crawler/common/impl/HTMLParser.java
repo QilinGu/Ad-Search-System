@@ -15,6 +15,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by ChenCheng on 1/10/2017.
@@ -24,6 +26,8 @@ public class HTMLParser {
     private final Log log = LogFactory.getLog(HTMLParser.class);
 
     private String baseUri = null;
+    private LinkedBlockingQueue abpCategoryQueue;
+    private LinkedBlockingDeque abpProductQueue;
 
     public String getBaseUri() {
         return baseUri;
@@ -86,5 +90,21 @@ public class HTMLParser {
 
 
         return respBody;
+    }
+
+    public void setAbpCategoryQueue(LinkedBlockingQueue abpCategoryQueue) {
+        this.abpCategoryQueue = abpCategoryQueue;
+    }
+
+    public LinkedBlockingQueue getAbpCategoryQueue() {
+        return abpCategoryQueue;
+    }
+
+    public void setAbpProductQueue(LinkedBlockingDeque abpProductQueue) {
+        this.abpProductQueue = abpProductQueue;
+    }
+
+    public LinkedBlockingDeque getAbpProductQueue() {
+        return abpProductQueue;
     }
 }
