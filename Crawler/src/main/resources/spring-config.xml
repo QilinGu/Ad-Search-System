@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
@@ -22,10 +23,13 @@
 
     </bean>
 
-    <bean id="htmlParser" class="com.charles.crawler.common.impl.HTMLParser">
+    <bean id="htmlParser" class="com.charles.crawler.common.impl.HTMLParser"/>
+
+    <bean id="queueElementProvider" class="com.charles.crawler.produceconsumer.QueueElementProvider">
         <property name="abpCategoryQueue" ref="abpCategoryQueue"/>
         <property name="abpProductQueue" ref="abpProductQueue"/>
     </bean>
+
 
     <bean id="abpCategoryQueue" class="java.util.concurrent.LinkedBlockingQueue">
         <constructor-arg index="0" type="int" value="1000"/>
@@ -35,12 +39,28 @@
         <constructor-arg index="0" type="int" value="200"/>
     </bean>
 
-    <bean id="queueElementProvide" class="com.charles.crawler.produceconsumer.QueueElementProvider">
-
-    </bean>
 
     <bean id="alreadyAddedCategorySet" class="java.util.HashSet"/>
     <bean id="alreadyAddedProductSet" class="java.util.HashSet"/>
+    <bean id="productList" class="java.util.LinkedList"/>
+
+    <bean id="pagePaerserThread" class="com.charles.crawler.sync.PageParserThread" scope="prototype">
+        <constructor-arg index="0" ref="productService"/>
+        <constructor-arg index="1" type="java.util.concurrent.BlockingQueue" ref="abpProductQueue"/>
+        <constructor-arg index="2" ref="pageAnalizer"/>
+        <constructor-arg index="3" value="0" type="java.lang.Integer"/>
+        <constructor-arg index="4" value="200" type="java.lang.Integer" name="maxProduct"/>
+    </bean>
+
+    <bean id="pageAnalizerThread" class="com.charles.crawler.sync.PageAnalizerThread" scope="prototype">
+        <constructor-arg index="0" type="java.util.concurrent.BlockingQueue" ref="abpCategoryQueue"/>
+        <constructor-arg index="1" type="java.util.concurrent.BlockingQueue" ref="abpProductQueue"/>
+        <constructor-arg index="2" ref="pageAnalizer"/>
+        <constructor-arg index="3" ref="queueElementProvider"/>
+        <constructor-arg index="4" name="maxProduct" type="java.lang.Integer" value="200"/>
+        <constructor-arg index="5" name="initialURL" type="java.lang.String" value="http://www.amazon.com/gp/site-directory"/>
+    </bean>
+
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
@@ -52,8 +72,28 @@
         <property name="password" value="1234"></property>
     </bean>
 
+
+    <bean id="productService" class="com.charles.crawler.model.service.impl.ProductServiceImpl">
+        <property name="productDAO" ref="productDAO"/>
+        <property name="products" ref="productList"/>
+    </bean>
+
+    <bean id="pageAnalizerService" class="com.charles.crawler.model.service.impl.PageAnalyzerServiceImpl">
+        <property name="abpCategoryQueue" ref="abpCategoryQueue"/>
+        <property name="abpProductQueue" ref="abpProductQueue"/>
+        <property name="pageAnalizerThread" ref="pageAnalizerThread"/>
+        <property name="pageAnalizer" ref="pageAnalizer"/>
+        <property name="pageParserThread" ref="pagePaerserThread"/>
+        <property name="threadPoolTaskExecutor" ref="taskExecutor"/>
+        <property name="productService" ref="productService"/>
+        <property name="numberOfPageAnalizers"><value>1</value></property>
+        <property name="numberOfParsers"><value>20</value></property>
+    </bean>
+
+
     <bean id="productDAO" class="com.charles.crawler.model.dao.implement.ProductDAOImpl">
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
+
 
 </beans>
