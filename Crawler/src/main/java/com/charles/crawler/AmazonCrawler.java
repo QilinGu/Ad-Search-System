@@ -6,11 +6,9 @@ import com.charles.crawler.model.service.interfaces.ProductService;
 import com.charles.crawler.sync.PageAnalizerThread;
 import com.charles.crawler.sync.PageParserThread;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
-@ImportResource("spring-config.xml")
 /**
  * Created by ChenCheng on 1/8/2017.
  */
@@ -88,7 +86,8 @@ public class AmazonCrawler {
 
     public static void main(String[] args) {
         context = new ClassPathXmlApplicationContext(CONFIG_PATH);
-        PageAnalyzerService pageAnalyzerService = (PageAnalyzerService) context.getBean("PageAnalyzerService");
+        PageAnalyzerService pageAnalyzerService = (PageAnalyzerService) context.getBean("pageAnalizerService");
+
         pageAnalyzerService.analizeSiteAndStored();
     }
 }
