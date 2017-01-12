@@ -23,6 +23,12 @@ public class PageAnalyzerServiceImpl implements PageAnalyzerService {
     private PagePageAnalyzer pageAnalizer = null;
     private ProductService ProductService = null;
 
+    public ProductService getProductService(){
+        return ProductService;
+    }
+    public void setProductService(ProductService ProductService){
+         this.ProductService = ProductService;
+    }
 
     private ThreadPoolTaskExecutor threadPoolTaskExecutor = null;
     // Number of Retrievers/Producers
@@ -94,13 +100,7 @@ public class PageAnalyzerServiceImpl implements PageAnalyzerService {
         this.pageAnalizer = pageAnalizer;
     }
 
-    public com.charles.crawler.model.service.interfaces.ProductService getProductService() {
-        return ProductService;
-    }
 
-    public void setProductService(com.charles.crawler.model.service.interfaces.ProductService productService) {
-        ProductService = productService;
-    }
 
     public void analizeSiteAndStored() {
         log.info("->-> Starting method PageAnalyzerService.analizeSiteAndStored()");
@@ -120,7 +120,6 @@ public class PageAnalyzerServiceImpl implements PageAnalyzerService {
         threadPoolTaskExecutor.shutdown();
 
         while (threadPoolTaskExecutor.getActiveCount() != 0) {}
-
 
         getProductService().printProductToCsvFileByDefault();
         log.info("<-<- Ending PageAnalizerService.analizeSiteAndStored()");
