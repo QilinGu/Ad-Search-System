@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -23,7 +24,25 @@ public class PageAnalizerThread implements Runnable{
     private Integer maxProduct = null;
     private PagePageAnalyzer pageAnalizer = null;
     private String initialURL = null;
+
+    public QueueElementProvider getQueueElementProvider() {
+        return queueElementProvider;
+    }
+
+    public void setQueueElementProvider(QueueElementProvider queueElementProvider) {
+        this.queueElementProvider = queueElementProvider;
+    }
+
     private QueueElementProvider queueElementProvider;
+    private Set<String> alreadyAddedProductSet = null;
+
+    public Set<String> getAlreadyAddedProductSet() {
+        return alreadyAddedProductSet;
+    }
+
+    public void setAlreadyAddedProductSet(Set<String> alreadyAddedProductSet) {
+        this.alreadyAddedProductSet = alreadyAddedProductSet;
+    }
 
     public BlockingQueue<PageLinkProductElement> getAbpProductQueue() {
         return abpProductQueue;
@@ -114,7 +133,4 @@ public class PageAnalizerThread implements Runnable{
         log.info("<-<- Ending method PageRetrieverThread.run()");
     }
 
-    public void setQueueElementProvider(QueueElementProvider queueElementProvider) {
-        this.queueElementProvider = queueElementProvider;
-    }
 }
