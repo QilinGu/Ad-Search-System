@@ -166,7 +166,8 @@ public abstract class PagePageAnalyzerImpl implements PagePageAnalyzer {
         return  null;
     }
 
-    protected String getAttributeValueFromMetaContentByName(Document doc, String lookinUpAttribute, String getValueFromAttrubute){
+    protected String getAttributeValueFromMetaContentByName(Document doc, String lookinUpAttribute,
+                                                            String getValueFromAttrubute){
         String selectorParameter = "meta[name=" + lookinUpAttribute + "]";
         Elements pagelinks = doc.select(selectorParameter);
         if (!pagelinks.isEmpty()){
@@ -207,7 +208,8 @@ public abstract class PagePageAnalyzerImpl implements PagePageAnalyzer {
 
     protected abstract Class getExcludedProductClass();
 
-    public PagePageAnalyzerImpl(Set<String> alreadyAddedCategorySet, Set<String> alreadyAddedProductSet, HTMLParser htmlParser)
+    public PagePageAnalyzerImpl(Set<String> alreadyAddedCategorySet, Set<String> alreadyAddedProductSet,
+                                HTMLParser htmlParser)
         throws IOException{
         setAlreadyAddedCategorySet(alreadyAddedCategorySet);
         setAlreadyAddedProductSet(alreadyAddedProductSet);

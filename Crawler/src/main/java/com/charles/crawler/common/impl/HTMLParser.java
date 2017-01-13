@@ -32,8 +32,16 @@ public class HTMLParser implements Parser, Connection{
         return baseUri;
     }
 
-    public void setBaseUri(String baseUrl) {
-        this.baseUri = baseUri;
+    public void setBaseUri(String uri) {
+        if (uri != null){
+            int initialIndex = uri.indexOf("//");
+            if (initialIndex != -1){
+                int endIndex = uri.indexOf("/", initialIndex + "//".length());
+                if (endIndex != -1){
+                    baseUri = uri.substring(0, endIndex);
+                }
+            }
+        }
     }
 
     @Override
@@ -54,34 +62,35 @@ public class HTMLParser implements Parser, Connection{
         String respBody = null;
         RequestConfig config = RequestConfig.custom().setCircularRedirectsAllowed(true).setMaxRedirects(5).build();
         CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
-
-        HttpGet httpGet = new HttpGet(urlToParse);
-        log.debug("Executing Http Get Request: " + httpGet.getURI());
-        setBaseUri(httpGet.getURI().toString());
-
-        ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
-            public String handleResponse(HttpResponse httpResponse) throws ClientProtocolException, IOException {
-                int status = httpResponse.getStatusLine().getStatusCode();
-                if (status >= 200 && status < 300){
-                    HttpEntity httpEntity = httpResponse.getEntity();
-                    return httpEntity != null ? EntityUtils.toString(httpEntity) : null;
-                }
-                else{
-                    throw new ClientProtocolException("Unexpected response status:" + status);
-                }
-            }
-        };
-
         try {
-            respBody = httpClient.execute(httpGet, responseHandler);
-        }catch (ClientProtocolException e){
-            log.error("ClientProtocolException at method HTMLParser.connect() : " + e.getMessage());
-            e.printStackTrace();
+            HttpGet httpGet = new HttpGet(urlToParse);
+            log.debug("Executing Http Get Request: " + httpGet.getURI());
+            setBaseUri(httpGet.getURI().toString());
+
+            ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+                @Override
+                public String handleResponse(final HttpResponse httpResponse) throws ClientProtocolException, IOException {
+                    int status = httpResponse.getStatusLine().getStatusCode();
+                    if (status >= 200 && status < 300) {
+                        HttpEntity httpEntity = httpResponse.getEntity();
+                        return httpEntity != null ? EntityUtils.toString(httpEntity) : null;
+                    } else {
+                        throw new ClientProtocolException("Unexpected response status:" + status);
+                    }
+                }
+            };
+
+            try {
+                respBody = httpClient.execute(httpGet, responseHandler);
+            } catch (ClientProtocolException e) {
+                log.error("ClientProtocolException at method HTMLParser.connect() : " + e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                log.error("IOException at method HTMLParser.connect() : " + e.getMessage());
+                e.printStackTrace();
+            }
         }
-        catch (IOException e) {
-            log.error("IOException at method HTMLParser.connect() : " + e.getMessage());
-            e.printStackTrace();
-        }finally {
+        finally {
             try {
                 httpClient.close();
             } catch (IOException e) {
@@ -90,7 +99,7 @@ public class HTMLParser implements Parser, Connection{
             }
         }
 
-
+        
         return respBody;
     }
 
